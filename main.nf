@@ -82,7 +82,7 @@ if (workflow.profile.contains('awsbatch')) {
 
 
 // Define channels based on params
-  Channel.fromPath('testdata/*').set { ch_test_inputs }
+  Channel.fromPath('./testdata/*').set { ch_test_inputs }
 
 // Header log info
 log.info nfcoreHeader()
