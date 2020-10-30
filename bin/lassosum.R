@@ -48,24 +48,6 @@ fam[,ID:=do.call(paste, c(.SD, sep=":")),.SDcols=c(1:2)]
 
 
 
-# Run the lassosum pipeline
-# The cluster parameter is used for multi-threading
-# You can ignore that if you do not wish to perform multi-threaded processing
-out <- lassosum.pipeline(
-    cor = cor,
-    chr = ss$CHR,
-    pos = ss$BP,
-    A1 = ss$A1,
-    A2 = ss$A2,
-    ref.bfile = bfile,
-    test.bfile = bfile,
-    LDblocks = ld.file, 
-    cluster=cl
-)
-# Store the R2 results
-target.res <- validate(out, pheno = target.pheno, covar=cov)
-# Get the maximum R2
-r2 <- max(target.res$validation.table$value)^2
 
 
 
