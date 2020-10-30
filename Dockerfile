@@ -1,45 +1,54 @@
-FROM nfcore/base@sha256:2043dea2e3215a32576e2e9fa957d8d41f439d209abbf1f858fd02829d2b7d64
+FROM rocker/tidyverse@sha256:e60ef005f0c79b368c447a4ad28e67a71d96d980e3527adeeb87d5656ad97a11
 #FROM nfcore/base:1.10.2
 
-LABEL authors="Christina Chatzipantsiou" \
-      description="Docker image containing all software requirements for the siteqc pipeline"
+LABEL authors="Salvador Romero" \
+      description="Docker image containing all software requirements for the gwas tools"
 
 
 # Install the conda environment
-COPY environment.yml /
-RUN conda env create --quiet -f /environment.yml && conda clean -a
+#COPY environment.yml /
+
 
 # Add conda installation dir to PATH (instead of doing 'conda activate')
-ENV PATH /opt/conda/envs/siteqc-1.0dev/bin:$PATH
+#ENV PATH /opt/conda/envs/gwas/bin:$PATH
 
-# Install stringi R package and the ones that depend on it.
-# (Issue with stringi package from conda that it depends on libicu64 that
-# is not available for Debian 10)
+#RUN R -e "install.packages('devtools', repos = 'http://cran.us.r-project.org')"
+RUN R -e "library(devtools)"
+RUN R -e "devtools::install_github('dongjunchung/GGPA')"
+RUN R -e "install.packages('BiocManager')"
+RUN R -e "BiocManager::install('GWASTools')"
+RUN R -e "BiocManager::install('remotes', dependencies=T)"
+RUN R -e "install.packages('BiocInstaller')"
+RUN apt-get update
+RUN sudo yes | apt-get install libboost-all-dev
+RUN sudo yes | apt-get install libbz2-dev
+RUN sudo apt-get install -y liblzma-dev
 
-RUN R -e "install.packages('https://cran.r-project.org/src/contrib/Archive/stringi/stringi_1.4.5.tar.gz', repos=NULL, type='source')"
-RUN R -e "install.packages('https://cran.r-project.org/src/contrib/Archive/stringr/stringr_1.3.1.tar.gz', repos=NULL, type='source')"
-RUN R -e "install.packages('https://cran.r-project.org/src/contrib/Archive/plyr/plyr_1.8.5.tar.gz', repos=NULL, type='source')"
-RUN R -e "install.packages('https://cran.r-project.org/src/contrib/Archive/reshape2/reshape2_1.4.3.tar.gz', repos=NULL, type='source')"
-RUN R -e "install.packages('https://cran.r-project.org/src/contrib/magrittr_1.5.tar.gz', repos=NULL, type='source')"
-RUN R -e "install.packages('https://cran.r-project.org/src/contrib/Archive/tidyr/tidyr_1.0.2.tar.gz', repos=NULL, type='source')"
-#RUN R -e "install.packages('https://cran.r-project.org/src/contrib/Archive/BH/BH_1.72.0-2.tar.gz', repos=NULL, type='source')"
-RUN R -e "install.packages("dplyr")"
-RUN R -e "install.packages('https://cran.r-project.org/src/contrib/Archive/data.table/data.table_1.12.8.tar.gz', repos=NULL, type='source')"
+RUN apt-get update && apt-get -y install tcl8.6-dev tk8.6-dev
+RUN R -e "devtools::install_github('cran/PredictABEL')"
+RUN R -e "devtools::install_github('tshmak/lassosum')"
+
+
+RUN apt-get update && \
+    apt-get install -yq --no-install-recommends \
+        graphviz \
+        wget \
+        build-essential \
+        libopenblas-dev \
+        libgsl0-dev \
+        procps && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN R -e "install.packages('network')"
+RUN R -e "install.packages('sna')"
+RUN R -e "install.packages('scales')"
+RUN R -e "BiocManager::install('GWASdata')"
+RUN R -e "install.packages('R.utils')"
 
 
 
-
-# Dump the details of the installed packages to a file for posterity
-RUN conda env export --name nf-core-siteqc-1.0dev > nf-core-siteqc-1.0dev.yml
 
 # Instruct R processes to use these empty files instead of clashing with a local version
 RUN touch .Rprofile
 RUN touch .Renviron
-
-
-# Install GAWK
-RUN apt-get update && \
-    apt-get install -y \
-                   gawk \
-                   tabix \
-
