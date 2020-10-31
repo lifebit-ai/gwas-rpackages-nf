@@ -1,4 +1,0 @@
-Warning message:
-no DISPLAY variable so Tk is not available 
-dev.new(): using pdf(file="Rplots1.pdf")
-AUC [95% CI] for the model 1 :  0.592 [ 0.58  -  0.604 ] 
