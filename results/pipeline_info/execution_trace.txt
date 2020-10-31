@@ -1,0 +1,5 @@
+task_id	hash	native_id	name	status	exit	submit	duration	realtime	%cpu	peak_rss	peak_vmem	rchar	wchar
+3	0c/57cd82	70614	predictabel	COMPLETED	0	2020-10-31 00:20:50.635	15.8s	13.5s	113.7%	274.9 MB	504 MB	26.2 MB	2.8 MB
+2	09/77bfc9	70637	gwas_tools	COMPLETED	0	2020-10-31 00:21:06.507	10.8s	8.4s	95.1%	278.4 MB	523.6 MB	25.6 MB	60.8 KB
+1	48/d15e90	70662	ggpa_r	COMPLETED	0	2020-10-31 00:21:17.303	11.2s	9.5s	102.3%	199 MB	412.8 MB	16.9 MB	30.8 KB
+4	fe/601194	70686	lassosum	COMPLETED	0	2020-10-31 00:21:28.576	13.9s	11.9s	100.9%	302 MB	497.6 MB	33.9 MB	50.9 MB

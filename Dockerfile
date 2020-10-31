@@ -45,7 +45,8 @@ RUN R -e "install.packages('sna')"
 RUN R -e "install.packages('scales')"
 RUN R -e "BiocManager::install('GWASdata')"
 RUN R -e "install.packages('R.utils')"
-
+WORKDIR /usr/local/bin
+COPY ./testdata/* /usr/local/bin/
 
 
 

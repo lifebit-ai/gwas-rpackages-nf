@@ -1,0 +1,3 @@
+Warning message:
+no DISPLAY variable so Tk is not available 
+dev.new(): using pdf(file="Rplots1.pdf")

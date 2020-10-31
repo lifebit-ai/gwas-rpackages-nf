@@ -1,4 +1,4 @@
-**Genomics England's workflow for variant quality control and annotation**.
+**Repo for Nextflow integration and cloudOs tests of PRS and GWAS R packages (This Nextflow process take no inputs from the user as are made just for running tests of the R packages)**.
 
 ## Introduction
 
@@ -13,28 +13,19 @@ The pipeline is built using [Nextflow](https://www.nextflow.io), a workflow tool
 3. Download the pipeline and test it on a minimal dataset with a single command:
 
     ```bash
-    nextflow run lifebit-ai/siteqc -profile test,<docker/singularity/conda/institute>
+    nextflow run lifebit-ai/gwas-rpackages-nf
     ```
 
 4. Start running your own analysis!
 
-    <!-- TODO nf-core: Update the example "typical command" below used to run the pipeline -->
 
     ```bash
-    nextflow run nf-core/siteqc --input s3://lifebit-featured-datasets/projects/gel/siteqc/input.csv
+    nextflow run lifebit-ai/gwas-rpackages-nf
     ```
 
 See [usage docs](docs/usage.md) for all of the available options when running the pipeline.
 
-## Documentation
 
-The lifebit-ai/siteqc pipeline comes with documentation about the pipeline which you can find in the [`docs/` directory](docs).
-
-## Credits
-
-The `siteqc` was originally written by Daniel Rhodes and the Genomics England Bioinformatics team.
-
-The Nextflow implementation of the pipeline was developed by Christina Chatzipantsiou for use by Genomics England and collaborators.
 
 ## Contributions and Support
 
